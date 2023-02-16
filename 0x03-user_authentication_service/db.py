@@ -43,7 +43,7 @@ class DB:
         return user
 
     def find_user_by(self, **kwargs) -> User:
-        """Returns first rrow found in users table
+        """Returns first row found in users table
         as filtered by methods input arguments
         """
         attributes, values = [], []
@@ -52,7 +52,7 @@ class DB:
                 attributes.append(getattr(User, key))
                 values.append(value)
             else:
-                raise InvalidRequestError()
+                raise InvalidRequestError
         result = self._session.query(User).filter_by(**kwargs).first()
         if result is None:
             raise NoResultFound
