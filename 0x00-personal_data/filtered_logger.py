@@ -2,9 +2,11 @@
 """log message"""
 
 import re
+from typing import List
 
 
-def filter_datum(fields, redaction, message, separator):
+def filter_datum(fields: List[str], redaction: str,
+                 message: str, separator: str) -> str:
     """returns log message obfuscated"""
     for field in fields:
         pattern = r'({0}=)[^{1}]*({1})'.format(field, separator)
