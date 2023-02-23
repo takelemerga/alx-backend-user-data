@@ -67,3 +67,34 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
         database=database,
     )
     return con
+
+
+def main() -> None:
+    """
+    display each row from users table
+    """
+    colnames = "name,email,phone,ssn,password,ip,last_login,user_agent"
+    columns = colnames.split(',')
+    db = get_db()
+    cur = db.cursor()
+
+    query = ('SELECT * FROM users;')
+    cur.execute(query)
+    data = cur.fetchall()
+
+    logger = get_logger()
+
+    for row in data:
+        record = map(
+                lambda x: '{}={}'.format(x[0], x[1]),
+                zip(columns, row),
+            )
+        field = '{};'.format('; '.join(list(record)))
+        logger.info(field)
+
+    cur.close()
+    db.close()
+
+
+if __name__ == "__main__":
+    main()
